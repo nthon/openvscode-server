@@ -153,7 +153,7 @@ async function start() {
  *
  * If only `--port` is provided then connect to that port.
  *
- * In absence of specified ports, connect to port 8000.
+ * In absence of specified ports, connect to port 3000.
  * @param {string | undefined} strPort
  * @param {string | undefined} strPickPort
  * @returns {Promise<number>}
@@ -169,7 +169,7 @@ async function parsePort(strPort, strPickPort) {
 				return specificPort;
 			}
 		} else if (range = parseRange(strPort)) {
-			return await findFreePort(range.start, range.end, 8000);
+			return await findFreePort(range.start, range.end, 3000);
 		} else {
 			console.log('--port "${strPort}" is not a valid number or range.');
 		}
@@ -180,13 +180,13 @@ async function parsePort(strPort, strPickPort) {
 			if (range.start <= specificPort && specificPort <= range.end) {
 				return specificPort;
 			} else {
-				return await findFreePort(range.start, range.end, 8000);
+				return await findFreePort(range.start, range.end, 3000);
 			}
 		} else {
 			console.log(`--pick-port "${strPickPort}" is not properly formatted.`);
 		}
 	}
-	return 8000;
+	return 3000;
 }
 
 /**
