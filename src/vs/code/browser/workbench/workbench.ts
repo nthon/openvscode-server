@@ -8,7 +8,7 @@ import { streamToBuffer } from 'vs/base/common/buffer';
 import { CancellationToken } from 'vs/base/common/cancellation';
 import { Emitter } from 'vs/base/common/event';
 import { Disposable } from 'vs/base/common/lifecycle';
-import { RemoteAuthorities, Schemas } from 'vs/base/common/network';
+import { Schemas } from 'vs/base/common/network';
 import { isEqual } from 'vs/base/common/resources';
 import { URI, UriComponents } from 'vs/base/common/uri';
 import { generateUuid } from 'vs/base/common/uuid';
@@ -405,20 +405,6 @@ function doCreateUri(path: string, queryValues: Map<string, string>): URI {
 	create(document.body, {
 		...config,
 		remoteAuthority,
-		resourceUriProvider: uri => {
-			const connectionToken = RemoteAuthorities['_connectionTokens'][remoteAuthority];
-			let query = `path=${encodeURIComponent(uri.path)}`;
-			if (typeof connectionToken === 'string') {
-				query += `&tkn=${encodeURIComponent(connectionToken)}`;
-			}
-
-			return URI.from({
-				scheme: location.protocol === 'https:' ? 'https' : 'http',
-				authority: remoteAuthority,
-				path: `/vscode-remote-resource`,
-				query
-			});
-		},
 		developmentOptions: {
 			...config.developmentOptions
 		},
