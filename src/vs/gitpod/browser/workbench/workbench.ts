@@ -767,14 +767,6 @@ async function doStart(): Promise<IDisposable> {
 			}
 		},
 		workspaceProvider,
-		resourceUriProvider: uri => {
-			return URI.from({
-				scheme: location.protocol === 'https:' ? 'https' : 'http',
-				authority: remoteAuthority,
-				path: `/vscode-remote-resource`,
-				query: `tkn=00000&path=${encodeURIComponent(uri.path)}`
-			});
-		},
 		resolveExternalUri: async (uri) => {
 			const localhost = extractLocalHostUriMetaDataForPortMapping(uri);
 			if (!localhost) {
